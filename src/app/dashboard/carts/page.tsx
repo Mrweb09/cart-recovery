@@ -39,8 +39,8 @@ export default function CartsPage() {
   }, [clientId, status, page])
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-10">
+    <div className="p-4 md:p-8">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-10">
         <div>
           <h1 className="text-2xl font-bold text-white tracking-wide">Abandoned Carts</h1>
           <p className="text-text-secondary text-sm mt-1">{total} total carts tracked</p>
@@ -49,7 +49,8 @@ export default function CartsPage() {
       </div>
 
       {/* Status tabs */}
-      <div className="flex gap-1 glass-card p-1 w-fit mb-7" style={{ borderRadius: '0.625rem' }}>
+      <div className="overflow-x-auto mb-7">
+      <div className="flex gap-1 glass-card p-1 w-fit" style={{ borderRadius: '0.625rem' }}>
         {STATUS_TABS.map((tab) => (
           <button
             key={tab.value}
@@ -63,6 +64,7 @@ export default function CartsPage() {
             {tab.label}
           </button>
         ))}
+      </div>
       </div>
 
       <CartsTable carts={carts} loading={loading} />

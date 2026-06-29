@@ -45,7 +45,7 @@ export default function StatusPage() {
   const allOk = data?.status === 'ok'
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen p-4 md:p-8">
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-10">
           <div>

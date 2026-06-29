@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { href: '/status', label: 'Status', icon: '◉' },
 ]
 
-export function NavLinks() {
+export function NavLinks({ onItemClick }: { onItemClick?: () => void }) {
   const pathname = usePathname()
 
   return (
@@ -26,6 +26,7 @@ export function NavLinks() {
           <Link
             key={item.href}
             href={item.href}
+            onClick={onItemClick}
             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative ${
               isActive
                 ? 'text-gold bg-gold/8 border border-gold/20'
@@ -36,9 +37,7 @@ export function NavLinks() {
               {item.icon}
             </span>
             <span>{item.label}</span>
-            {isActive && (
-              <span className="ml-auto w-1.5 h-1.5 rounded-full bg-gold" />
-            )}
+            {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-gold" />}
           </Link>
         )
       })}

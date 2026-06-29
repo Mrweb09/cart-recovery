@@ -26,18 +26,18 @@ export default function CartDetailPage() {
 
   if (loading) {
     return (
-      <div className="p-8 flex items-center justify-center min-h-64">
+      <div className="p-4 md:p-8 flex items-center justify-center min-h-64">
         <div className="w-6 h-6 border-2 border-gold border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
 
   if (!cart) {
-    return <div className="p-8 text-text-secondary">Cart not found.</div>
+    return <div className="p-4 md:p-8 text-text-secondary">Cart not found.</div>
   }
 
   return (
-    <div className="p-8 max-w-4xl">
+    <div className="p-4 md:p-8 max-w-4xl">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-text-muted mb-7">
         <Link href="/dashboard/carts" className="hover:text-gold transition-colors">Carts</Link>
@@ -46,7 +46,7 @@ export default function CartDetailPage() {
       </div>
 
       {/* Cart header */}
-      <div className="flex items-start justify-between mb-9">
+      <div className="flex flex-wrap items-start justify-between gap-4 mb-9">
         <div>
           <h1 className="text-2xl font-bold text-white tracking-wide">{cart.customer_name ?? cart.customer_email}</h1>
           <div className="text-text-muted text-sm mt-1">{cart.customer_email}</div>

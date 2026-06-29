@@ -44,9 +44,9 @@ export default function DashboardPage() {
   }, [fetchData])
 
   return (
-    <div className="p-8">
+    <div className="p-4 md:p-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-10">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-white tracking-wide">Overview</h1>
           <p className="text-text-secondary text-sm mt-1">Real-time cart recovery performance</p>

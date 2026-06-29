@@ -108,7 +108,7 @@ export default function DemoPage() {
   return (
     <div className="min-h-screen text-white">
       {/* Header */}
-      <div className="border-b border-white/5 px-8 py-4 flex items-center justify-between" style={{ background: 'rgba(2,8,24,0.8)', backdropFilter: 'blur(20px)' }}>
+      <div className="border-b border-white/5 px-4 md:px-8 py-4 flex items-center justify-between" style={{ background: 'rgba(2,8,24,0.8)', backdropFilter: 'blur(20px)' }}>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)' }}>
             <span className="text-bg text-xs font-bold">CR</span>
@@ -122,28 +122,28 @@ export default function DemoPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto p-8">
+      <div className="max-w-7xl mx-auto p-4 md:p-8">
         {/* Brand header */}
-        <div className="glass-card p-6 mb-6 flex items-center gap-6">
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)', boxShadow: '0 0 24px rgba(245,200,66,0.25)' }}>
+        <div className="glass-card p-4 md:p-6 mb-6 flex flex-wrap items-center gap-4">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)', boxShadow: '0 0 24px rgba(245,200,66,0.25)' }}>
             <span className="text-bg font-bold text-lg">UT</span>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <h1 className="text-xl font-bold text-white tracking-wide">UrbanThreads</h1>
             <div className="text-text-muted text-sm mt-0.5">urbanthreads.myshopify.com · Streetwear tone</div>
           </div>
-          <div className="flex gap-6 text-center">
+          <div className="flex gap-4 md:gap-6 text-center">
             <div>
-              <div className="text-2xl font-bold text-white">{metrics.carts}</div>
-              <div className="text-text-muted text-xs mt-0.5">Carts captured</div>
+              <div className="text-xl md:text-2xl font-bold text-white">{metrics.carts}</div>
+              <div className="text-text-muted text-xs mt-0.5">Carts</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-gold gold-glow">£{metrics.revenue}</div>
-              <div className="text-text-muted text-xs mt-0.5">Revenue recovered</div>
+              <div className="text-xl md:text-2xl font-bold text-gold gold-glow">£{metrics.revenue}</div>
+              <div className="text-text-muted text-xs mt-0.5">Recovered</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-accent">{metrics.emails}</div>
-              <div className="text-text-muted text-xs mt-0.5">Emails sent</div>
+              <div className="text-xl md:text-2xl font-bold text-accent">{metrics.emails}</div>
+              <div className="text-text-muted text-xs mt-0.5">Emails</div>
             </div>
           </div>
         </div>
@@ -309,14 +309,14 @@ export default function DemoPage() {
         )}
 
         {/* CTA */}
-        <div className="mt-6 glass-card p-5 flex items-center justify-between border border-gold/10" style={{ background: 'rgba(245,200,66,0.02)' }}>
+        <div className="mt-6 glass-card p-5 flex flex-wrap items-center justify-between gap-4 border border-gold/10" style={{ background: 'rgba(245,200,66,0.02)' }}>
           <div>
             <div className="font-semibold text-white tracking-wide">Ready to deploy for your clients?</div>
             <div className="text-text-muted text-sm mt-0.5">Onboard a new client in under 5 minutes</div>
           </div>
           <a
             href="/onboard"
-            className="text-bg text-sm font-semibold px-5 py-2.5 rounded-lg transition-all hover:brightness-110"
+            className="text-bg text-sm font-semibold px-5 py-2.5 rounded-lg transition-all hover:brightness-110 shrink-0"
             style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)', boxShadow: '0 4px 20px rgba(245,200,66,0.2)' }}
           >
             Add Client →
