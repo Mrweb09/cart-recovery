@@ -124,25 +124,27 @@ export default function DemoPage() {
 
       <div className="max-w-7xl mx-auto p-4 md:p-8">
         {/* Brand header */}
-        <div className="glass-card p-4 md:p-6 mb-6 flex flex-wrap items-center gap-4">
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)', boxShadow: '0 0 24px rgba(245,200,66,0.25)' }}>
-            <span className="text-bg font-bold text-lg">UT</span>
+        <div className="glass-card p-4 md:p-6 mb-6">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)', boxShadow: '0 0 24px rgba(245,200,66,0.25)' }}>
+              <span className="text-bg font-bold text-lg">UT</span>
+            </div>
+            <div className="min-w-0">
+              <h1 className="text-xl font-bold text-white tracking-wide">UrbanThreads</h1>
+              <div className="text-text-muted text-xs mt-0.5 truncate">urbanthreads.myshopify.com · Streetwear</div>
+            </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <h1 className="text-xl font-bold text-white tracking-wide">UrbanThreads</h1>
-            <div className="text-text-muted text-sm mt-0.5">urbanthreads.myshopify.com · Streetwear tone</div>
-          </div>
-          <div className="flex gap-4 md:gap-6 text-center">
-            <div>
-              <div className="text-xl md:text-2xl font-bold text-white">{metrics.carts}</div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            <div className="glass-card p-2">
+              <div className="text-xl font-bold text-white">{metrics.carts}</div>
               <div className="text-text-muted text-xs mt-0.5">Carts</div>
             </div>
-            <div>
-              <div className="text-xl md:text-2xl font-bold text-gold gold-glow">£{metrics.revenue}</div>
+            <div className="glass-card p-2">
+              <div className="text-xl font-bold text-gold gold-glow">£{metrics.revenue}</div>
               <div className="text-text-muted text-xs mt-0.5">Recovered</div>
             </div>
-            <div>
-              <div className="text-xl md:text-2xl font-bold text-accent">{metrics.emails}</div>
+            <div className="glass-card p-2">
+              <div className="text-xl font-bold text-accent">{metrics.emails}</div>
               <div className="text-text-muted text-xs mt-0.5">Emails</div>
             </div>
           </div>
