@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 function CheckIcon() {
@@ -36,9 +36,73 @@ const FAQS = [
 export default function LandingPage() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly')
+  const [showExit, setShowExit] = useState(false)
+  const [ticker, setTicker] = useState(0)
+  const [displayTicker, setDisplayTicker] = useState(0)
+
+  // Fetch stats for ticker
+  useEffect(() => {
+    fetch('/api/stats')
+      .then(r => r.json())
+      .then(data => setTicker(data.calculator_identified ?? 0))
+      .catch(() => {})
+  }, [])
+
+  // Animate ticker counting up
+  useEffect(() => {
+    if (ticker === 0) return
+    const duration = 1500
+    const steps = 60
+    const increment = ticker / steps
+    let current = 0
+    const timer = setInterval(() => {
+      current = Math.min(current + increment, ticker)
+      setDisplayTicker(Math.round(current))
+      if (current >= ticker) clearInterval(timer)
+    }, duration / steps)
+    return () => clearInterval(timer)
+  }, [ticker])
+
+  // Exit intent popup
+  useEffect(() => {
+    const shown = sessionStorage.getItem('exit_shown')
+    if (shown) return
+    const handler = (e: MouseEvent) => {
+      if (e.clientY < 10) {
+        setShowExit(true)
+        sessionStorage.setItem('exit_shown', '1')
+      }
+    }
+    document.addEventListener('mouseleave', handler)
+    return () => document.removeEventListener('mouseleave', handler)
+  }, [])
 
   return (
     <div className="min-h-screen text-white overflow-x-hidden">
+
+      {/* ── Exit Intent Popup ── */}
+      {showExit && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(8px)' }}>
+          <div className="glass-card p-8 max-w-md w-full border border-gold/20 relative" style={{ background: 'rgba(6,15,30,0.98)' }}>
+            <button onClick={() => setShowExit(false)} className="absolute top-4 right-4 text-text-muted hover:text-white transition-colors text-lg leading-none">✕</button>
+            <div className="text-gold text-xs font-semibold tracking-widest uppercase mb-3">Before you go</div>
+            <h2 className="text-xl font-bold text-white mb-2">Find out how much you are losing</h2>
+            <p className="text-text-secondary text-sm mb-5">Enter your monthly revenue and see exactly how much abandoned carts are costing you every month.</p>
+            <Link
+              href="/calculator"
+              onClick={() => setShowExit(false)}
+              className="block text-bg font-semibold px-6 py-3 rounded-lg hover:brightness-110 transition-all text-sm text-center"
+              style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)' }}
+            >
+              Calculate my losses →
+            </Link>
+            <button onClick={() => setShowExit(false)} className="block w-full text-center text-text-muted text-xs mt-3 hover:text-white transition-colors">
+              No thanks
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ── Nav ── */}
       <nav className="sticky top-0 z-50 border-b border-white/5" style={{ background: 'rgba(2,8,24,0.9)', backdropFilter: 'blur(20px)' }}>
@@ -53,7 +117,7 @@ export default function LandingPage() {
           <div className="hidden md:flex items-center gap-6 text-sm">
             <Link href="/demo" className="text-text-secondary hover:text-white transition-colors">Demo</Link>
             <Link href="/calculator" className="text-text-secondary hover:text-white transition-colors">Calculator</Link>
-            <Link href="/status" className="text-text-secondary hover:text-white transition-colors">Status</Link>
+            <Link href="/compare" className="text-text-secondary hover:text-white transition-colors">Compare</Link>
             <Link href="/dashboard" className="text-text-secondary hover:text-white transition-colors">Log in</Link>
             <Link href="/demo" className="text-bg text-sm font-semibold px-4 py-2 rounded-lg hover:brightness-110 transition-all" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)' }}>
               See Demo
@@ -144,6 +208,15 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* ── Revenue Ticker ── */}
+      {ticker > 0 && (
+        <div className="border-b border-gold/10 py-3 text-center text-xs" style={{ background: 'rgba(245,200,66,0.04)' }}>
+          <span className="text-text-muted">Recoverable revenue identified by our calculator: </span>
+          <span className="text-gold font-bold">£{displayTicker.toLocaleString('en-GB')}</span>
+          <span className="text-text-muted"> and counting</span>
+        </div>
+      )}
 
       {/* ── Stats ── */}
       <section className="border-y border-white/5" style={{ background: 'rgba(255,255,255,0.015)' }}>
@@ -262,17 +335,47 @@ export default function LandingPage() {
       {/* ── Pricing ── */}
       <section className="border-y border-white/5 py-20 md:py-28" style={{ background: 'rgba(255,255,255,0.015)' }}>
         <div className="max-w-6xl mx-auto px-4 md:px-8">
-          <div className="text-center mb-14">
+          <div className="text-center mb-10">
             <div className="text-gold text-xs font-semibold tracking-widest uppercase mb-3">Pricing</div>
             <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Simple pricing. Serious returns.</h2>
             <p className="text-text-secondary mt-3">Most stores recover the monthly fee within the first week.</p>
           </div>
+
+          {/* Billing toggle */}
+          <div className="flex justify-center mb-8">
+            <div className="glass-card p-1 flex gap-1" style={{ borderRadius: '0.625rem' }}>
+              <button
+                onClick={() => setBilling('monthly')}
+                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${billing === 'monthly' ? 'bg-gold text-bg shadow-lg' : 'text-text-secondary hover:text-white'}`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setBilling('annual')}
+                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${billing === 'annual' ? 'bg-gold text-bg shadow-lg' : 'text-text-secondary hover:text-white'}`}
+              >
+                Annual
+                <span className={`text-xs font-semibold px-1.5 py-0.5 rounded ${billing === 'annual' ? 'bg-bg/20 text-bg' : 'bg-emerald-500/20 text-emerald-400'}`}>Save £389</span>
+              </button>
+            </div>
+          </div>
+
           <div className="max-w-sm mx-auto glass-card p-8 border border-gold/20 text-center relative overflow-hidden" style={{ background: 'rgba(245,200,66,0.02)', boxShadow: '0 0 60px rgba(245,200,66,0.06)' }}>
-            <div className="absolute top-4 right-4 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full">3 days free</div>
-            <div className="text-gold text-xs font-semibold tracking-widest uppercase mb-4">Monthly plan</div>
-            <div className="text-5xl font-bold text-white mb-1">£99</div>
-            <div className="text-text-muted text-sm mb-2">per month · cancel anytime</div>
-            <div className="text-emerald-400 text-xs font-medium mb-8">Start free for 3 days. No card needed.</div>
+            <div className="absolute top-4 right-4 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full">7 days free</div>
+            <div className="text-gold text-xs font-semibold tracking-widest uppercase mb-4">{billing === 'monthly' ? 'Monthly plan' : 'Annual plan'}</div>
+            {billing === 'monthly' ? (
+              <>
+                <div className="text-5xl font-bold text-white mb-1">£99</div>
+                <div className="text-text-muted text-sm mb-2">per month · cancel anytime</div>
+              </>
+            ) : (
+              <>
+                <div className="text-5xl font-bold text-white mb-1">£799</div>
+                <div className="text-text-muted text-sm mb-1">per year · save £389 vs monthly</div>
+                <div className="text-gold text-xs font-medium mb-1">That is just £66.58/month</div>
+              </>
+            )}
+            <div className="text-emerald-400 text-xs font-medium mb-8">Start free for 7 days. No card needed.</div>
             <div className="space-y-3 text-left mb-8">
               {[
                 'Unlimited abandoned carts tracked',
@@ -367,6 +470,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-5 text-xs text-text-muted">
             <Link href="/demo" className="hover:text-white transition-colors">Demo</Link>
             <Link href="/calculator" className="hover:text-white transition-colors">Calculator</Link>
+            <Link href="/compare" className="hover:text-white transition-colors">Compare</Link>
             <Link href="/status" className="hover:text-white transition-colors">Status</Link>
             <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
           </div>

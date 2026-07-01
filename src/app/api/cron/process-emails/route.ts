@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { processEmailSequences } from '@/lib/email-sequence'
+import { sendWeeklyReports } from '@/lib/weekly-reports'
 
 // Vercel cron hits this every 5 minutes (see vercel.json)
 export async function GET(request: NextRequest) {
@@ -13,14 +14,22 @@ export async function GET(request: NextRequest) {
 
   try {
     const result = await processEmailSequences()
-    const duration = Date.now() - start
 
+    // Send weekly reports every Monday
+    let weeklyResult = { sent: 0, errors: 0 }
+    if (new Date().getDay() === 1) {
+      weeklyResult = await sendWeeklyReports()
+      console.log(`[Cron] Weekly reports: ${weeklyResult.sent} sent, ${weeklyResult.errors} errors`)
+    }
+
+    const duration = Date.now() - start
     console.log(`[Cron] Processed ${result.processed} emails, ${result.errors} errors in ${duration}ms`)
 
     return NextResponse.json({
       ok: true,
       processed: result.processed,
       errors: result.errors,
+      weekly_reports: weeklyResult,
       duration_ms: duration,
     })
   } catch (err) {
