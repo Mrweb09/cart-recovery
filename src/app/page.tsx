@@ -161,6 +161,56 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Comparison ── */}
+      <section className="max-w-6xl mx-auto px-4 md:px-8 py-20 md:py-28">
+        <div className="text-center mb-14">
+          <div className="text-gold text-xs font-semibold tracking-widest uppercase mb-3">Why CartPulse</div>
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Generic emails get ignored. Ours get opened.</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Without */}
+          <div className="glass-card p-7 border border-red-500/15" style={{ background: 'rgba(239,68,68,0.02)' }}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-8 rounded-full bg-red-500/15 flex items-center justify-center text-red-400 text-sm font-bold">✕</div>
+              <div className="font-semibold text-white">Without CartPulse</div>
+            </div>
+            <div className="space-y-4">
+              {[
+                { label: 'Subject line', value: '"You left something in your cart!"' },
+                { label: 'Body', value: '"Don\'t forget your items. Come back and complete your purchase."' },
+                { label: 'Personalisation', value: 'None — same email to every customer' },
+                { label: 'Result', value: 'Ignored. Deleted. Unsubscribed.' },
+              ].map((row) => (
+                <div key={row.label} className="pb-4 border-b border-white/5 last:border-0 last:pb-0">
+                  <div className="text-text-muted text-xs uppercase tracking-widest mb-1">{row.label}</div>
+                  <div className="text-text-secondary text-sm">{row.value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* With */}
+          <div className="glass-card p-7 border border-gold/20" style={{ background: 'rgba(245,200,66,0.02)' }}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-bg text-sm font-bold" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)' }}>✓</div>
+              <div className="font-semibold text-white">With CartPulse</div>
+            </div>
+            <div className="space-y-4">
+              {[
+                { label: 'Subject line', value: '"Yo Jordan, your Oversized Hoodie is selling fast 👀"' },
+                { label: 'Body', value: '"Written by AI specifically for what Jordan left, in your brand\'s exact tone of voice."' },
+                { label: 'Personalisation', value: 'Customer name, exact products, brand tone — every time' },
+                { label: 'Result', value: '45% open rate. Revenue recovered on autopilot.' },
+              ].map((row) => (
+                <div key={row.label} className="pb-4 border-b border-white/5 last:border-0 last:pb-0">
+                  <div className="text-text-muted text-xs uppercase tracking-widest mb-1">{row.label}</div>
+                  <div className="text-white text-sm font-medium">{row.value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── How it works ── */}
       <section className="max-w-6xl mx-auto px-4 md:px-8 py-20 md:py-28">
         <div className="text-center mb-14">
@@ -217,10 +267,12 @@ export default function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Simple pricing. Serious returns.</h2>
             <p className="text-text-secondary mt-3">Most stores recover the monthly fee within the first week.</p>
           </div>
-          <div className="max-w-sm mx-auto glass-card p-8 border border-gold/20 text-center" style={{ background: 'rgba(245,200,66,0.02)', boxShadow: '0 0 60px rgba(245,200,66,0.06)' }}>
+          <div className="max-w-sm mx-auto glass-card p-8 border border-gold/20 text-center relative overflow-hidden" style={{ background: 'rgba(245,200,66,0.02)', boxShadow: '0 0 60px rgba(245,200,66,0.06)' }}>
+            <div className="absolute top-4 right-4 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full">3 days free</div>
             <div className="text-gold text-xs font-semibold tracking-widest uppercase mb-4">Monthly plan</div>
             <div className="text-5xl font-bold text-white mb-1">£99</div>
-            <div className="text-text-muted text-sm mb-8">per month · cancel anytime</div>
+            <div className="text-text-muted text-sm mb-2">per month · cancel anytime</div>
+            <div className="text-emerald-400 text-xs font-medium mb-8">Start free for 3 days. No card needed.</div>
             <div className="space-y-3 text-left mb-8">
               {[
                 'Unlimited abandoned carts tracked',
@@ -229,7 +281,7 @@ export default function LandingPage() {
                 'Real-time dashboard and analytics',
                 'Shopify webhook integration',
                 'Custom brand tone and styling',
-                'Full setup included',
+                'Full setup included — we do it for you',
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3 text-sm text-text-secondary">
                   <CheckIcon />
@@ -237,10 +289,12 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
-            <Link href="/onboard" className="block text-bg font-semibold px-6 py-3 rounded-lg hover:brightness-110 transition-all text-sm" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)' }}>
-              Get started →
+            <Link href="/demo" className="block text-bg font-semibold px-6 py-3.5 rounded-lg hover:brightness-110 transition-all text-sm mb-3" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)' }}>
+              Start free trial →
             </Link>
-            <p className="text-text-muted text-xs mt-4">No setup fees · No long-term contracts</p>
+            <Link href="/demo" className="block text-text-muted text-xs hover:text-white transition-colors">
+              See live demo first
+            </Link>
           </div>
         </div>
       </section>
@@ -288,14 +342,15 @@ export default function LandingPage() {
           <div className="text-gold text-xs font-semibold tracking-widest uppercase mb-4 relative">Ready to start?</div>
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4 relative">Stop losing sales to abandoned carts</h2>
           <p className="text-text-secondary text-lg mb-8 max-w-xl mx-auto relative">Every abandoned cart is a customer who almost bought. CartPulse brings them back automatically while you focus on everything else.</p>
-          <div className="flex flex-wrap justify-center gap-3 relative">
+          <div className="flex flex-wrap justify-center gap-3 relative mb-4">
             <Link href="/demo" className="text-bg font-semibold px-8 py-3.5 rounded-lg hover:brightness-110 transition-all text-sm" style={{ background: 'linear-gradient(135deg, #F5C842, #c9a535)', boxShadow: '0 4px 30px rgba(245,200,66,0.25)' }}>
-              See live demo →
+              Start free trial →
             </Link>
-            <Link href="/onboard" className="glass-card glass-card-hover px-8 py-3.5 rounded-lg text-text-secondary hover:text-white text-sm font-medium transition-all">
-              Get started
+            <Link href="/demo" className="glass-card glass-card-hover px-8 py-3.5 rounded-lg text-text-secondary hover:text-white text-sm font-medium transition-all">
+              See live demo
             </Link>
           </div>
+          <p className="text-text-muted text-xs relative">3 days free · No card required · Cancel anytime</p>
         </div>
       </section>
 
