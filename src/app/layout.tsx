@@ -5,8 +5,24 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'CartRecovery — Abandoned Cart Automation',
-  description: 'AI-powered abandoned cart recovery for Shopify brands',
+  title: 'CartPulse — AI Cart Recovery for Shopify',
+  description: 'CartPulse automatically sends AI-personalised recovery emails when customers abandon their Shopify cart. Set up in 5 minutes. Recover revenue on autopilot.',
+  keywords: ['shopify cart recovery', 'abandoned cart emails', 'AI email automation', 'shopify marketing'],
+  openGraph: {
+    title: 'CartPulse — AI Cart Recovery for Shopify',
+    description: 'Automatically recover abandoned Shopify carts with AI-personalised emails. Set up in 5 minutes.',
+    url: 'https://cartpulse-io.vercel.app',
+    siteName: 'CartPulse',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CartPulse — AI Cart Recovery for Shopify',
+    description: 'Automatically recover abandoned Shopify carts with AI-personalised emails. Set up in 5 minutes.',
+  },
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
